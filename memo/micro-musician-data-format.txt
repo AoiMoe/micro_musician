@@ -1,0 +1,88 @@
+0000 - 0001  "MC"
+0002 - 001F  タイトル
+0020         タイムベース
+0021         テンポ
+0022 - 0023  拍子 (分子、分母の順)
+0030 - 003f  調号(00H:C, 01H:G..., 81H:F, 82H:Bb... )
+0040 - 004f  MIDI Channel
+0070 - 016f  Comment
+0200 -       トラックデータ (4 Byteごと)
+
+ (normal track)
+  00 - 7f      音符、休符(gg=0)
+    nn ss gg vv    nn:ノートナンバー, ss:ステップタイム,
+                   gg:ゲートタイム, vv:ベロシティ
+
+  fd 00 00 00  小節セパレータ
+
+  e0 ss nn 00  音色  ss:step, nn:p.no.
+
+  e1 ss dd 00  アフタータッチ dd:density
+
+  e2 ss nn vv  Control C  nn:no, vv:value
+
+  e3 ss kk dd  Pressure  kk:k.no. dd:dens
+
+  e4 ss ll hh  bend   hh*128 + ll : bend+2000H
+
+  d0 ss cc 00  midi ch  cc:ch
+
+  fa ss tt nn  tempo  tt:tempo, nn:nop
+
+  fb tt 00 00  :| tt:times
+
+  fc 00 00 00  |:
+
+  f0 00 00 00  D.S.
+
+  f0 01 00 00  Segno
+
+  f0 02 00 00  to coda
+
+  f0 03 00 00  coda
+
+  f0 04 00 00  first time
+
+  f0 05 00 00  second time
+
+  f0 06 00 00  fine
+
+  f2 nn 00 00  exclusive message  nn:no
+
+  fe fe fe fe  end of ch
+
+ (rhythm track)
+  pp nn 00 00  pattern.  pp:pattern no.  nn:0x30(??)
+
+  トラックデータの構成
+
+  tr 1データ fefefefe tr 2 fefefefe ...... tr 8 fefefefe fffffff0
+  tr 9データ fefefefe tr10 fefefefe ...... tr16 fefefefe fffffff1
+  rhythm tr  fefefefe fffffff3
+
+トラックデータの次はリズムパターンデータ
+以下は、トラックデータ部の終りからのオフセット
+
+0000 - 001f リズム楽器のノートナンバー
+0020 - 003f リズム楽器のチャネル
+0040        ダミー?
+0041        rhythm MIDI CH
+0042 - 0061 rhythm Gate Time
+0062 - 0161 rhythm inst name (per 8byte, 32)
+0162 - 0361 dummy?
+0362 - 03a1 リズムパターン1小節の長さ
+03a2 - 03a9 リズム楽器のベロシティ
+03aa - 03ad ff ff ff f4
+03ae -      リズムパターン
+last        ff ff ff f5
+
+リズムパターンの構造 (2 byte ごと)
+  pattern1  tt nn tt nn .... ll 00 fe fe
+  pattern2  tt nn tt nn .... ll 00 fe fe
+    ....
+  pattern64 .......................fe fe ff ff ff f5
+
+  tt : タイミング(1/192)
+  nn : 発音する音
+         bit0-bit4 : 楽器番号 (1-32)
+         bit5-bit7 : 強さ (1-8)

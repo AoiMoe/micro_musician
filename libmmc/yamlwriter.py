@@ -11,6 +11,7 @@ def song_to_yaml(outf, level, song):
     _iout(outf, level, "song:")
     level += 1
     _iout(outf, level, "title: '{}'".format(_bin2str(song.title)))
+    _iout(outf, level, 'tempo: {}'.format(song.tempo))
     _iout(outf, level, "time_base: {}".format(song.time_base))
     _iout(outf, level, "time_signature: {}/{}".format(song.time_signature_numerator, song.time_signature_deniminator))
     _iout(outf, level, "tracks:")

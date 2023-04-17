@@ -201,6 +201,6 @@ def parse_rhythm_pattern(input, id, bar_length):
     while cont:
         (t, n) = input.parse('2B', 2)
         cont = t != 0xfe or n != 0xfe
-        if cont:
-            events.append((t, n % 32, n // 32))
+        if cont and t < bar_length:
+            events.append(mmcstruct.RhythmNote(t, n % 32, n // 32))
     return mmcstruct.RhythmPattern(id=id, bar_length=bar_length, events=events)

@@ -185,11 +185,26 @@ class RhythmInstrument:
         return r"{{rhythm_instrument: {{id: {}, name: {}, midi_channel: {}, note_number: {}, gate_time: {}}}".format(
             self.id, self.name, self.midi_channel, self.note_number, self.gate_time)
 
+class RhythmNote:
+    def __init__(self, tick, instrument, velocity):
+        self.tick = tick
+        self.instrument = instrument
+        self.velocity = velocity
+    def __lt__(self, other):
+        if self.tick < other.tick:
+            return True
+        elif self.tick > other.tick:
+            return False
+        else:
+            return self.instrument < other.instrument
+    def __repr__(self):
+        return r"{{tick: {}, instrument: {}, velocity: {}}".format(self.tick, self.instrument, self.velocity)
+
 class RhythmPattern:
     def __init__(self, *, id = 0, bar_length = 192, events = []):
         self.id = id + 1
         self.bar_length = bar_length
-        self.events = events
+        self.events = sorted(events)
 
     def __repr__(self):
         return r"{{id: {}, rhythm_pattern: {{bar_length: {}, events: {}}}".format(self.id, self.bar_length, self.events)

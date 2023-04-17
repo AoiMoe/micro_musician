@@ -61,4 +61,4 @@ def _rhythm_pattern_to_yaml(outf, level, pat):
     _iout(outf, level, "bar_length: {}".format(pat.bar_length))
     _iout(outf, level, "events:")
     for ev in pat.events:
-        _iout(outf, level+1, "- [{:>3}, {}, {}]".format(ev[0], ev[1], ev[2]))
+        _iout(outf, level+1, "- [{:>3}, {}, {}]".format(ev.tick, ev.instrument, ev.velocity))

@@ -160,7 +160,7 @@ class Track:
     def __init__(self, *,
                  id = 0,
                  key_signature = 'C',
-                 midi_channel = 1,
+                 midi_channel = 0,
                  comment = '',
                  events = []):
         self.id = id

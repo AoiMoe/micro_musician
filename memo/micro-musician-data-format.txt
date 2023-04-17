@@ -1,3 +1,5 @@
+注: 大昔に解析したもので、もはや実機上で動かすこともできず、あいまいなところが残っている。
+
 0000 - 0001  "MC"
 0002 - 001F  タイトル
 0020         タイムベース
@@ -52,7 +54,7 @@
   fe fe fe fe  end of ch
 
  (rhythm track)
-  pp nn 00 00  pattern.  pp:pattern no.  nn:0x30(??)
+  pp nn 00 00  pattern.  pp:pattern no.  nn:0x30(??)   -- pp は 1〜64 であることに注意。
 
   トラックデータの構成
 
@@ -68,7 +70,7 @@
 0040        ダミー?
 0041        rhythm MIDI CH
 0042 - 0061 rhythm Gate Time
-0062 - 0161 rhythm inst name (per 8byte, 32)
+0062 - 0161 rhythm inst name (per 8byte, 32 slots)
 0162 - 0361 dummy?
 0362 - 03a1 リズムパターン1小節の長さ
 03a2 - 03a9 リズム楽器のベロシティ
@@ -84,5 +86,5 @@ last        ff ff ff f5
 
   tt : タイミング(1/192)
   nn : 発音する音
-         bit0-bit4 : 楽器番号 (1-32)
-         bit5-bit7 : 強さ (1-8)
+         bit0-bit4 : 楽器番号 (0-31)
+         bit5-bit7 : 強さ番号 (0-7)

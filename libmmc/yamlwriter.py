@@ -33,7 +33,7 @@ def _track_to_yaml(outf, level, track):
         _iout(outf, level+1, "- [ {:>3}, {} ]".format(ev.step_time, ', '.join(map(str, t))))
 
 def _rhythm_to_yaml(outf, level, rhythm):
-    _iout(outf, level, "master_midi_channel: {}".format(rhythm.master_midi_channel))
+    _iout(outf, level, "master_midi_channel: {}".format(rhythm.master_midi_channel+1))
     _iout(outf, level, "instruments:")
     for inst in rhythm.instruments:
         _rhythm_instrument_to_yaml(outf, level+1, inst)

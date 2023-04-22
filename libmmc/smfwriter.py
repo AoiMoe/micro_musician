@@ -115,7 +115,7 @@ class _TrackConverter(_Converter):
         self.out_buffer.put_event([0xA0 + self.midi_channel, ev.note, ev.intensity], at=self.next_tick)
 
     def _pitch_bend(self, ev):
-        v = ev.intensity + 0x4000
+        v = ev.intensity + 0x2000
         self.out_buffer.put_event([0xE0 + self.midi_channel, v & 0x7F, v >> 7], at=self.next_tick)
 
     _cls2fun = {
